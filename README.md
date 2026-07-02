@@ -36,3 +36,15 @@ python3 main.py
   (parcurgerea echipelor).
 - **Structuri de date:** `list` (echipe), `tuple` (date echipă, scor meci),
   `dict` (echipe pe țară), `set` (țări unice).
+
+## Concepte din Lecția 12
+
+1. **Funcții Lambda** — `utile/statistici.py`, funcțiile
+   `echipe_calificate()` (folosește `filter(lambda ...)`) și
+   `nume_echipe_calificate()` (folosește `map(lambda ...)`). De asemenea,
+   `afiseaza_clasament()` folosește o funcție Lambda ca `key` pentru
+   `sorted()`.
+2. **Generator (`yield`)** — `meciuri/simulator.py`, funcția
+   `genereaza_perechi()` produce perechile de echipe (gazdă, oaspete)
+   pe rând, folosind `yield`, în loc să construiască o listă completă
+   în memorie.

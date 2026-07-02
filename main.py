@@ -9,7 +9,13 @@ suplimentare (țările implicate și echipele grupate pe țară).
 
 from echipe.echipa import Echipa
 from meciuri.simulator import simuleaza_grupa
-from utile.statistici import afiseaza_clasament, tari_participante, statistici_pe_tara
+from utile.statistici import (
+    afiseaza_clasament,
+    tari_participante,
+    statistici_pe_tara,
+    echipe_calificate,
+    nume_echipe_calificate,
+)
 from date.echipe_date import ECHIPE_GRUPA
 
 
@@ -51,6 +57,10 @@ def main():
     print("\nEchipe grupate pe țară:")
     for tara, nume_echipe in pe_tara.items():
         print(f"  {tara}: {nume_echipe}")
+
+    # Concept L12 - Funcții Lambda (folosite intern cu filter() si map())
+    nume_calificate = nume_echipe_calificate(echipe)
+    print(f"\nEchipe calificate mai departe (Lambda + filter + map): {nume_calificate}")
 
 
 if __name__ == "__main__":

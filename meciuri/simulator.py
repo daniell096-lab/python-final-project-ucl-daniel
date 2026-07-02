@@ -9,6 +9,20 @@ marcheze mai multe goluri).
 import random
 
 
+def genereaza_perechi(lista_echipe):
+    """Generator (concept din Lecția 12: Iterator vs. Generator).
+
+    În loc să construim o listă completă cu toate perechile de echipe
+    (gazdă, oaspete) și să o ținem în memorie, folosim `yield` pentru a
+    "produce" o pereche la fiecare pas al iterării. Astfel valorile sunt
+    generate una câte una, la cerere (lazy evaluation), nu toate deodată.
+    """
+    for i in range(len(lista_echipe) - 1):
+        gazda = lista_echipe[i]
+        oaspete = lista_echipe[i + 1]
+        yield (gazda, oaspete)  # yield in loc de return -> functia devine generator
+
+
 def simuleaza_meci(echipa_gazda, echipa_oaspete):
     """Simulează un meci între două obiecte de tip Echipa.
 
@@ -35,11 +49,9 @@ def simuleaza_grupa(lista_echipe, numar_runde=3):
     runda_curenta = 0
 
     while runda_curenta < numar_runde:
-        # Se parcurg echipele două câte două (gazdă - oaspete)
-        for i in range(len(lista_echipe) - 1):
-            gazda = lista_echipe[i]
-            oaspete = lista_echipe[i + 1]
-
+        # Folosim generatorul genereaza_perechi() in locul unei liste
+        # intermediare cu toate perechile - valorile sunt produse pe rand
+        for gazda, oaspete in genereaza_perechi(lista_echipe):
             gg, go = simuleaza_meci(gazda, oaspete)
             gazda.adauga_rezultat(gg, go)
             oaspete.adauga_rezultat(go, gg)

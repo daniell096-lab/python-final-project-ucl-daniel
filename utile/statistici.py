@@ -31,6 +31,26 @@ def afiseaza_clasament(lista_echipe):
     return clasament
 
 
+def echipe_calificate(lista_echipe):
+    """Funcție Lambda (concept din Lecția 12) folosită împreună cu filter().
+
+    filter() păstrează doar echipele pentru care funcția Lambda
+    returnează True (adică echipele calificate mai departe).
+    """
+    calificate = filter(lambda echipa: echipa.calificata, lista_echipe)
+    return list(calificate)
+
+
+def nume_echipe_calificate(lista_echipe):
+    """Funcție Lambda folosită împreună cu map().
+
+    map() aplică funcția Lambda pe fiecare echipă calificată și
+    extrage doar numele acesteia (string).
+    """
+    calificate = echipe_calificate(lista_echipe)
+    return list(map(lambda echipa: echipa.nume, calificate))
+
+
 def tari_participante(lista_echipe):
     """Returnează un SET cu țările unice prezente în grupă (fără duplicate)."""
     tari = set()
