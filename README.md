@@ -14,7 +14,8 @@ ucl_project/
 │   └── echipa.py             # clasa Echipa + BugetInvalidError
 ├── meciuri/
 │   ├── __init__.py
-│   └── simulator.py          # simularea meciurilor / grupei
+│   ├── simulator.py           # simularea meciurilor / grupei
+│   └── grupa.py                # clasa Grupa (Tema 13)
 ├── utile/
 │   ├── __init__.py
 │   └── statistici.py         # clasament, statistici pe țară
@@ -115,4 +116,28 @@ Rulare:
 
 ```
 python3 transport/mijloc_transport.py
+```
+
+## Tema 13 - Refactorizare POO
+
+**Clasa creată: `Grupa`** (`meciuri/grupa.py`).
+
+**Scopul ei:** înainte, o "grupă" din Champions League era doar o listă
+simplă de obiecte `Echipa`, iar toată logica (simulare, clasament,
+calificare, salvare CSV) exista sub formă de funcții separate, apelate
+direct din `main.py` cu lista de echipe drept parametru. Clasa `Grupa`
+încapsulează această listă ca stare internă (`self.echipe`) și oferă
+metode dedicate care operează asupra ei: `incarca_echipe_din_csv()`,
+`simuleaza()`, `clasament()`, `salveaza_clasament()`,
+`echipe_calificate_nume()`, `tari()`, `echipe_pe_tara()`. Astfel,
+`main.py` nu mai manipulează direct liste și funcții împrăștiate, ci
+lucrează cu un singur obiect coerent, cu comportament propriu (inclusiv
+metodele speciale `__len__` și `__repr__`).
+
+`main.py` instanțiază clasa astfel:
+
+```python
+grupa_a = Grupa("Grupa A")
+grupa_a.incarca_echipe_din_csv("date/echipe.csv")
+grupa_a.simuleaza(numar_runde=3)
 ```
