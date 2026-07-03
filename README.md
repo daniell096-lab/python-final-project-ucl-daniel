@@ -11,15 +11,20 @@ ucl_project/
 ├── main.py                  # punctul de intrare al aplicației
 ├── echipe/
 │   ├── __init__.py
-│   └── echipa.py             # clasa Echipa
+│   └── echipa.py             # clasa Echipa + BugetInvalidError
 ├── meciuri/
 │   ├── __init__.py
 │   └── simulator.py          # simularea meciurilor / grupei
 ├── utile/
 │   ├── __init__.py
 │   └── statistici.py         # clasament, statistici pe țară
-└── date/
-    └── echipe_date.py        # datele echipelor (nume, țară, buget)
+├── date/
+│   ├── echipe.csv             # datele echipelor (citire CSV)
+│   ├── clasament_final.csv    # clasament salvat (scriere CSV, generat la rulare)
+│   └── citire_scriere.py      # funcțiile de citire/scriere CSV
+└── tests/
+    ├── __init__.py
+    └── test_echipa.py         # teste pytest
 ```
 
 ## Rulare
@@ -74,3 +79,19 @@ Rulare teste:
 pip install pytest
 python3 -m pytest tests/ -v
 ```
+
+## Tema 11 - Citire/scriere fișiere
+
+Implementate în `date/citire_scriere.py`:
+
+1. **Citire dintr-un fișier CSV** — `citeste_echipe_csv()` citește
+   datele echipelor (nume, țară, buget) din `date/echipe.csv`, în locul
+   unei liste hardcodate în cod sursă.
+2. **Scriere într-un fișier CSV** — `scrie_clasament_csv()` salvează
+   clasamentul final al grupei (poziție, echipă, puncte, goluri,
+   golaveraj) în `date/clasament_final.csv`, la finalul fiecărei rulări
+   a lui `main.py`.
+
+Ambele operațiuni sunt protejate: dacă fișierul `echipe.csv` lipsește
+sau e gol, se ridică excepția proprie `FisierEchipeInvalidError`,
+tratată în `main.py`.

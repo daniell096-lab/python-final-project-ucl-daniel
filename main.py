@@ -16,7 +16,7 @@ from utile.statistici import (
     echipe_calificate,
     nume_echipe_calificate,
 )
-from date.echipe_date import ECHIPE_GRUPA
+from date.citire_scriere import citeste_echipe_csv, scrie_clasament_csv, FisierEchipeInvalidError
 
 
 def creeaza_echipe(date_echipe):
@@ -49,13 +49,20 @@ def main():
     """Funcția principală a programului."""
     print("=== SIMULARE GRUPĂ UEFA CHAMPIONS LEAGUE ===")
 
-    echipe = creeaza_echipe(ECHIPE_GRUPA)
+    try:
+        date_echipe = citeste_echipe_csv("date/echipe.csv")
+    except FisierEchipeInvalidError as eroare:
+        print(f"Eroare la citirea fisierului cu echipe: {eroare}")
+        return
+
+    echipe = creeaza_echipe(date_echipe)
     numar_runde = 3  # integer
 
     echipe = simuleaza_grupa(echipe, numar_runde)
     verifica_calificare(echipe)
 
-    afiseaza_clasament(echipe)
+    clasament = afiseaza_clasament(echipe)
+    scrie_clasament_csv(clasament, "date/clasament_final.csv")
 
     tari = tari_participante(echipe)
     print(f"\nȚări prezente în grupă ({len(tari)}): {tari}")
