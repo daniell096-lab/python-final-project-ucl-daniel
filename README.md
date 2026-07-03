@@ -22,6 +22,9 @@ ucl_project/
 │   ├── echipe.csv             # datele echipelor (citire CSV)
 │   ├── clasament_final.csv    # clasament salvat (scriere CSV, generat la rulare)
 │   └── citire_scriere.py      # funcțiile de citire/scriere CSV
+├── transport/
+│   ├── __init__.py
+│   └── mijloc_transport.py    # clasa abstractă MijlocDeTransport + Avion
 └── tests/
     ├── __init__.py
     └── test_echipa.py         # teste pytest
@@ -95,3 +98,21 @@ Implementate în `date/citire_scriere.py`:
 Ambele operațiuni sunt protejate: dacă fișierul `echipe.csv` lipsește
 sau e gol, se ridică excepția proprie `FisierEchipeInvalidError`,
 tratată în `main.py`.
+
+## Tema 12 - Clasă abstractă și moștenire
+
+Implementate în `transport/mijloc_transport.py`:
+
+1. **Clasa abstractă `MijlocDeTransport`** — atribut de clasă
+   `categorie = ""` și metoda abstractă `se_deplaseaza()`.
+2. **Clasa copil `Avion`** — moștenește `MijlocDeTransport`, suprascrie
+   `categorie = "aerian"` și metoda `se_deplaseaza()`; are în
+   constructor atributele de instanță `denumire` și `kilometraj`.
+3. **Demo** — la finalul fișierului se creează un obiect `Avion` și se
+   apelează `se_deplaseaza()`.
+
+Rulare:
+
+```
+python3 transport/mijloc_transport.py
+```
