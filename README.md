@@ -48,3 +48,29 @@ python3 main.py
    `genereaza_perechi()` produce perechile de echipe (gazdă, oaspete)
    pe rând, folosind `yield`, în loc să construiască o listă completă
    în memorie.
+
+## Tema 10 - Excepții și teste
+
+**Excepții folosite:**
+
+1. **Excepție proprie: `BugetInvalidError`** (`echipe/echipa.py`) —
+   ridicată la crearea unei `Echipa` cu buget invalid (≤ 0). Tratată în
+   `main.py`, în `creeaza_echipe()`, printr-un bloc `try/except`.
+2. **Excepție standard: `ZeroDivisionError`** — ridicată în mod natural
+   de `Echipa.medie_puncte()` dacă echipa nu a jucat niciun meci
+   (împărțire la 0). Tratată în `main.py` printr-un bloc `try/except`.
+
+Bonus: `ValueError` (standard) este ridicată în `adauga_rezultat()`
+dacă se introduc goluri negative.
+
+**Teste `pytest`** — în `tests/test_echipa.py`:
+- `test_buget_invalid_ridica_exceptie_proprie`
+- `test_medie_puncte_fara_meciuri_ridica_zero_division_error`
+- (plus 2 teste suplimentare de bonus)
+
+Rulare teste:
+
+```
+pip install pytest
+python3 -m pytest tests/ -v
+```

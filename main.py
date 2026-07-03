@@ -7,7 +7,7 @@ meciurile și afișează clasamentul final, împreună cu câteva statistici
 suplimentare (țările implicate și echipele grupate pe țară).
 """
 
-from echipe.echipa import Echipa
+from echipe.echipa import Echipa, BugetInvalidError
 from meciuri.simulator import simuleaza_grupa
 from utile.statistici import (
     afiseaza_clasament,
@@ -20,11 +20,18 @@ from date.echipe_date import ECHIPE_GRUPA
 
 
 def creeaza_echipe(date_echipe):
-    """Transformă lista de tupluri (nume, tara, buget) în obiecte Echipa."""
+    """Transformă lista de tupluri (nume, tara, buget) în obiecte Echipa.
+
+    Tratează excepția proprie BugetInvalidError: dacă o echipă are un
+    buget invalid, este ignorată, iar programul continuă cu restul.
+    """
     echipe = []
     for nume, tara, buget in date_echipe:  # for peste o listă de tupluri
-        echipa_noua = Echipa(nume, tara, buget)
-        echipe.append(echipa_noua)
+        try:
+            echipa_noua = Echipa(nume, tara, buget)
+            echipe.append(echipa_noua)
+        except BugetInvalidError as eroare:
+            print(f"Echipa ignorata din cauza unui buget invalid: {eroare}")
     return echipe
 
 
@@ -61,6 +68,16 @@ def main():
     # Concept L12 - Funcții Lambda (folosite intern cu filter() si map())
     nume_calificate = nume_echipe_calificate(echipe)
     print(f"\nEchipe calificate mai departe (Lambda + filter + map): {nume_calificate}")
+
+    # Tratarea excepției standard ZeroDivisionError: se poate produce
+    # daca o echipa nu a jucat niciun meci (impartire la 0 in medie_puncte())
+    print("\nMedie puncte/meci:")
+    for echipa in echipe:
+        try:
+            medie = echipa.medie_puncte()
+            print(f"  {echipa.nume}: {medie:.2f}")
+        except ZeroDivisionError:
+            print(f"  {echipa.nume}: nu are meciuri jucate, media nu poate fi calculata")
 
 
 if __name__ == "__main__":
